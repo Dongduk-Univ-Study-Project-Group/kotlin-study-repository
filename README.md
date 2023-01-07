@@ -3,7 +3,7 @@
 ### Members
 | 이름 | 유희진 | 서한나 |
 | --- | --- | --- |
-| 깃허브 | [yu-heejin](https://github.com/yu-heejin) | [kittybelle](https://github.com/kittybelle) |
+| Github | [yu-heejin](https://github.com/yu-heejin) | [kittybelle](https://github.com/kittybelle) |
 
 ### Meeting Day
 - 매주 금요일 오전에 서로 모르는 부분에 대해 토의합니다.

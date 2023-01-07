@@ -21,5 +21,4 @@
     
     board name form : [category] article title
     ```
-    
 - 특별한 사유 없이 X 표시가 되어있는 경우 벌금이 부과될 수 있습니다.

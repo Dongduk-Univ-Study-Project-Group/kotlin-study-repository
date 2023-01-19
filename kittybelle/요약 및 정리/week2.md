@@ -185,3 +185,214 @@ fun highFunc(sum: (Int, Int) -> Int, a: Int, b: Int): Int {
 람다식을 이용해 함수를 변수처럼 매개변수, 인자, 반환값 등에 활용하는 고차 함수를 구성 → 생산성 높임
 
 </aside>
+
+## 4-1 이름없는 함수의 또 다른 형태, 람다(Lambda)!
+
+### 람다식 선언
+
+![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/de737e07-9ec5-4e57-916f-18b73e9df457/Untitled.png)
+
+```kotlin
+fun main() {
+
+    var result: Int
+
+    // 일반 변수에 람다식 할당
+		// { 람다 함수에 쓸 매개변수 -> 반환할 식 }
+    val multi = {x: Int, y: Int -> x * y}
+    // 람다식이 할당된 변수는 함수처럼 사용 가능
+    result = multi(10, 20)
+    println(result)
+}
+```
+
+---
+
+![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/5b4dfd31-a94a-4fa0-b561-1f2f68bbca7f/Untitled.png)
+
+- 변수에 람다식 multi가 들어있음
+- 선언부에 자료형 정의 시, 매개변수의 자료형 생략 가능
+- 표현식이 **2줄 이상** → **마지막** 표현식 **반환**
+
+---
+
+![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/be606013-885d-4aad-be0d-854ca9db1cda/Untitled.png)
+
+- 반환값이 없다면(ex: 단순 println 출력) : Unit
+- 인자가 없다면 : ()
+- **람다식 안에 람다식**
+    - **()** → **() → Unit**
+    - 위처럼 크게 2개로 구분 가능
+    - 식 자체를 람다로 표현한 것
+    
+
+## 고차함수와 람다식의 이해
+
+### 매개변수에 람다식 함수를 이용한 고차함수
+
+```kotlin
+package chap04.section2
+
+fun main() {
+    var result: Int
+
+    // 람다식을 매개변수와 인자로 사용한 함수
+    result = highOrder({x, y -> x + y}, 10, 20)
+    println(result)
+}
+
+// 크게 3개의 매개변수(sum, a, b)
+// sum의 람다식은 x, y -> x + y
+// sum(a, b)에 의해 a=10, b=20 값이 전해져서 30 출력
+fun highOrder(sum: (Int, Int) -> Int, a: Int, b: Int): Int {
+    return sum(a, b)
+}
+```
+
+![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/a803a5d8-0f9a-48fd-8b5b-5040c62b5fb8/Untitled.png)
+
+- **값**에 의한 호출
+    - **함수**를 인자로 전달
+        - 람다식 함수는 값을 처리됨, 그 즉시 함수가 수행된 후 값 전달
+        
+        ```kotlin
+        fun main() {
+            val result = callByValue(lambda()) // 람다식 함수를 호출
+            println(result)
+        }
+        
+        fun callByValue(b: Boolean): Boolean { // 일반 변수 자료형으로 선언된 매개변수
+            println("callByValue function")
+            return b
+        }
+        
+        val lambda: () -> Boolean = {  // 람다 표현식이 두 줄이다
+            println("lambda function")
+            true 		    // 마지막 표현식 문장의 결과가 반환
+        }
+        ```
+        
+        1. lambda()는 매개변수 b의 인자가 된다.
+        2. lambda함수 실행!
+        3. 람다에서 식 2줄 이상 → 마지막꺼 반환 
+        
+- **람다식 이름**에 의한 호출
+    - **함수의 이름**을 인자로 전달
+        - **() -> Boolean** 이라는 람다식 이름(?)이 매개변수 b로 들어감
+        - 값 호출 : callByValue(lambda()) 괄호 있, 기본 타입 ↔ 이름 호출 : callByName(otherLambda) 괄호 없, 람다식 타입
+        - **함수 호출의 결과가 들어가는 게 아니라, 함수가 통째로 들어가게 됨**
+        
+        ```kotlin
+        fun main() {
+            val result = callByName(otherLambda) // 람다식 이름으로 호출
+            println(result)
+        }
+        
+        fun callByName(b: () -> Boolean): Boolean { // 람다식 함수 자료형으로 선언된 매개변수
+            println("callByName function")
+            return b()
+        }
+        
+        val otherLambda: () -> Boolean = {
+            println("otherLambda function")
+            true
+        }
+        ```
+        
+        ![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/68f9de27-fcdb-4d44-9c2c-a54cd1fb01a7/Untitled.png)
+        
+- **다른 함수의 참조**에 의한 호출
+    - sum을 람다식 형태로 참조하는 예제
+        - sum은 람다가 아니라서 이름으로 호출 불가능!
+        
+        <aside>
+        💡 c: (Int, Int) -> Int 람다식 형태로 선언돼있지만 함수 이름을 쓰고 싶다면? 
+        → :: 컬럼 2개를 사용해야 함
+        
+        </aside>
+        
+        ```kotlin
+        fun sum(x: Int, y: Int) = x + y
+        
+        funcParam(3, 2, sum) // 오류!! sum은 람다식이 아님
+        ...
+        fun funcParam(a: Int, b: Int, c: (Int, Int) -> Int): Int {
+        		return c(a, b)
+        }
+        
+        funcParam(3, 2, ::sum) // 올바른 표현
+        ```
+        
+        ```kotlin
+        fun main() {
+            // 1. 인자와 반환값이 있는 함수
+            val res1 = funcParam(3, 2, ::sum)
+            println(res1)
+        
+            // 2. 인자가 없는 함수
+            hello(::text) // 반환값이 없음
+        
+            // 3. 일반 변수에 값처럼 할당
+            val likeLambda = ::sum
+            println(likeLambda(6,6))
+        }
+        
+        fun sum(a: Int, b: Int) = a + b
+        
+        fun text(a: String, b: String) = "Hi! $a $b"
+        
+        fun funcParam(a: Int, b: Int, c: (Int, Int) -> Int): Int {
+            return c(a, b)
+        }
+        
+        fun hello(body: (String, String) -> String): Unit {
+            println(body("Hello", "World"))
+        }
+        ```
+        
+
+- 매개변수가 없는 경우
+    
+    ```kotlin
+    fun main() {
+        // 매개변수 없는 람다식 함수
+        noParam({ "Hello World!" })
+        noParam { "Hello World!" } // 위와 동일 결과, 소괄호 생략 가능
+    }
+    
+    // 매개변수가 없는 람다식 함수가 noParam 함수의 매개변수 out으로 지정됨
+    fun noParam(out: () -> String) = println(out())
+    ```
+    
+- 매개변수가 1개인 경우
+    
+    ```kotlin
+    fun main() {
+        // 매개변수 없는 람다식 함수
+    ...
+        // 매개변수가 하나 있는 람다식 함수
+        oneParam({ a -> "Hello World! $a" })
+        oneParam { a -> "Hello World! $a" } // 위와 동일 결과, 소괄호 생략 가능
+        oneParam { "Hello World! $it" }  // 위와 동일 결과, it으로 대체 가능
+    }
+    ...
+    // 매개변수가 하나 있는 람다식 함수가 oneParam함수의 매개변수 out으로 지정됨
+    fun oneParam(out: (String) -> String) {
+        println(out("OneParam"))
+    }
+    ```
+    
+- 매개변수가 2개 이상인 경우
+
+```kotlin
+fun main() {
+...
+    // 매개변수가 두 개 있는 람다식 함수
+    moreParam { a, b -> "Hello World! $a $b"} // 매개변수명 생략 불가
+...
+}
+// 매개변수가 두 개 있는 람다식 함수가 moreParam 함수의 매개변수로 지정됨
+fun moreParam(out: (String, String) -> String) {
+    println(out("OneParam", "TwoParam"))
+}
+```

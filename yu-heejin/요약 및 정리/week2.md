@@ -307,3 +307,29 @@ val lambda: () -> Unit = { println("not nested") }
 // 중첩되지 않은 람다를 사용하려면 다음과 같이 선언
 lambda()
 ```
+
+---
+
+## 고차 함수와 람다식의 이해 (1)
+
+### 매개변수에 람다식 함수를 이용한 고차 함수
+
+```kotlin
+fun main() {
+	var result: Int
+
+	// 람다식을 매개변수와 인자로 사용한 함수
+	result = highOrder({x, y -> x + y}, 10, 20)
+	println(result)
+}
+
+fun highOrder(sum: (Int, Int) -> Int, a: Int, b: Int): Int {
+	return sum(a, b)
+}
+```
+
+- 호출 동작
+    
+    ```kotlin
+    result = highOrder({x, y -> x + y}, 10, 20)
+    ```

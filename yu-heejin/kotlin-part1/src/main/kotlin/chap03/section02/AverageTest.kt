@@ -10,7 +10,7 @@ fun avgFunc(initial: Float = 0f, vararg numbers: Float): Double {
 
     println("result: $result, numbers.size: ${numbers.size}")
 
-    val avg = (result + initial) / numbers.size
+    val avg = (result + initial) / (numbers.size + 1)
 
     return avg.toDouble()
 }

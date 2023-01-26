@@ -4,7 +4,6 @@ package chap04.section03
 //    println("Hello")
 //    out(a)    // inline되지 않음
 //}
-
 // inline을 사용하면 다음과 같은 경고문을 볼 수 있다.
 // Expected performance impact from inlining is insignificant.
 // Inlining works best for functions with parameters of functional types

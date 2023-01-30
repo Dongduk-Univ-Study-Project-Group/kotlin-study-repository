@@ -1,4 +1,10 @@
 ## ✨ 네이버 부스트코스 코틀린 강의듣고 토이프로젝트 하기 ✨
+### 요약 정리 누락 현황 ❌
+
+| Github ID | 주차 |
+| --- | --- |
+| yu-heejin | - |
+| kittybelle | - |
 
 ### Members
 | 이름 | 유희진 | 서한나 |
@@ -22,10 +28,3 @@
     board name form : [category] article title
     ```
 - 특별한 사유 없이 X 표시가 되어있는 경우 벌금이 부과될 수 있습니다.
-
-### 요약 정리 누락 현황 ❌
-
-| Github ID | X |
-| --- | --- |
-| yu-heejin | - |
-| kittybelle | - |

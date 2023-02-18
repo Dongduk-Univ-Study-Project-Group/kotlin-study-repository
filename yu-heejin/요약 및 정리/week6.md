@@ -339,3 +339,30 @@ skills = run {
 }
 println(skills)   // kotlin Level:10
 ```
+
+### apply(), run() 비교하기
+
+```kotlin
+fun main() {
+	// apply, run 비교
+	data class Person(var name: String, var skills: String)
+	var person = Person("kildong", "kotlin")
+
+	val returnObj = person.apply {
+		this.name = "Sean"
+		this.skills = "java"
+		"success"  // 사용되지 않음
+	}
+	println(person)
+	println("returnObj: $returnObj")
+
+	val returnObj2 = person.run {
+		this.name = "Dooly"
+		this.skills = "C#"
+		"success"    // 마지막 식을 반환한다.
+	}
+
+	println(person)
+	println("returnObj2: $returnObj2")
+}
+```

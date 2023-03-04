@@ -1,3 +1,5 @@
+package chap01.section01
+
 class Car {
     val wheel: Int = 4
 
@@ -8,7 +10,7 @@ class Car {
 
 // 중괄호로 비워놓거나 단순 이름으로 존재하는 것이 가능하다.
 class Bird {}
-// class Bird
+// class chap01.section01.Bird
 
 fun main() {
     // 생성자를 사용하여 객체를 생성한다.

@@ -1,6 +1,8 @@
 ### [질문 1] lateinit → 프로퍼티 null 불가임. 그럼 언제 초기화해야할까?
 
-프로그램 실행 전으로 보임
+- 프로그램 실행 전으로 보인다고 생각했으나
+    - → null이 불가능한 게 아니라, NPE를 막기 위한 장치 중 하나.
+    - → null 자체는 가능하다.
 
 ### [질문2] val 변수 값 변경 불가?
 
@@ -28,3 +30,7 @@ fun main() {
     println("personDelegate Init: ${personDelegate.isInitialized()}")
 }
 ```
+
+- 이름을 바꾸는 코드가 없다. 애초부터 둘이 다른 변수였음.
+    - val person
+    - val personDelegate
